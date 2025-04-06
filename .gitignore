@@ -1,7 +1,15 @@
-# Ignore site-packages (Python packages)
-myEnv/Lib/site-packages/
-# Ignore Python bytecode files
-/node_modules
-/coverage
-/.DS_Store
-/.env
+# Ignore virtual environment
+myEnv/
+myEnv/*
+
+# Ignore Python cache files
+__pycache__/
+*.pyc
+
+# Ignore environment variables file
+.env
+
+# Ignore common folders that shouldn't be committed
+node_modules/
+coverage/
+.DS_Store
