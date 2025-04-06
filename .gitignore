@@ -1,4 +1,6 @@
-myEnv/
+# Ignore site-packages (Python packages)
+myEnv/Lib/site-packages/
+# Ignore Python bytecode files
 /node_modules
 /coverage
 /.DS_Store
