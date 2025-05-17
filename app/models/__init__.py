@@ -1,1 +1,0 @@
-from .FaceNet_utils import FaceEmbeddingModel
