@@ -1,5 +1,6 @@
 # services/face_match_service.py
 import numpy as np
+import os
 import faiss
 from repository.embedding_repository import embedding_store
 from models.facenet import FaceNetBackbone
@@ -9,7 +10,7 @@ import torch.nn.functional as F
 class FaceSimilearityService:
     def __init__(self):
         self.model = FaceNetBackbone(embedding_size=128)
-        self.model.load_state_dict(torch.load("facenet_model.pth", map_location=torch.device('cpu')))
+        self.model.load_state_dict(torch.load("app/models/facenet_model.pth", map_location=torch.device('cpu')))
         self.model.eval()
 
     def save_embedding(self, user_id: str, faces: list):

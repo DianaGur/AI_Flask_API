@@ -1,5 +1,6 @@
 from fastapi import FastAPI
-from presentation import facenet_router
+from app.presentation.facenet_router import router as facenet_router
+
 
 
 app = FastAPI()

@@ -1,6 +1,0 @@
-fastapi
-uvicorn
-scikit-learn
-tensorflow  # או torch
-numpy
-python-multipart

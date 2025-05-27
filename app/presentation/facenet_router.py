@@ -2,7 +2,7 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from typing import List
-from services.face_similarity_service import FaceMatchService
+from services.face_similarity_service import FaceSimilearityService
 from services.image_service import download_images, detect_faces
 from repository.embedding_repository import embedding_store
 
@@ -19,7 +19,7 @@ class SaveEmbeddingRequest(BaseModel):
     image_urls: List[str]
 
 # שירות ראשי
-matcher = FaceMatchService()
+matcher = FaceSimilearityService()
 
 @router.post("/match")
 def match_faces(req: MatchRequest):

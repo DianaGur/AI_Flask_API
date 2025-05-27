@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+pydantic
+torch
+torchvision
+facenet-pytorch
+faiss-cpu
+numpy
+typing-extensions
+scikit-learn
+matplotlib
+Pillow
+typing-extensions
