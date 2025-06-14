@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.presentation.facenet_router import router as facenet_router
+from presentation.facenet_router import router as facenet_router
 
 
 
@@ -8,4 +8,4 @@ app.include_router(facenet_router, prefix="/facenet", tags=["facenet"])
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("microservice.main:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("facenet_microserver_application:app", host="0.0.0.0", port=9001, reload=True)
