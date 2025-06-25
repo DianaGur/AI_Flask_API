@@ -13,7 +13,7 @@ class FaceSimilearityService:
         self.model.load_state_dict(torch.load("app/models/facenet_model.pth", map_location=torch.device('cpu')))
         self.model.eval()
 
-    def save_embedding(self, user_id: str, faces: list):
+    def save_embedding(self, userId: str, faces: list):
         embeddings = []
         for face in faces:
             face = face.resize((160, 160))
@@ -22,10 +22,10 @@ class FaceSimilearityService:
                 emb = self.model(face_tensor).squeeze().numpy()
                 embeddings.append(emb)
         final_embedding = np.mean(embeddings, axis=0).astype('float32')
-        embedding_store.save(user_id, final_embedding)
+        embedding_store.save(userId, final_embedding)
 
-    def match_user_to_candidates(self, user_id: str, candidate_ids: list):
-        query_embedding = embedding_store.get(user_id).reshape(1, -1)
+    def match_user_to_candidates(self, userId: str, candidate_ids: list):
+        query_embedding = embedding_store.get(userId).reshape(1, -1)
         candidate_embeddings, id_mapping = embedding_store.get_many(candidate_ids)
 
         if not candidate_embeddings:
@@ -40,10 +40,10 @@ class FaceSimilearityService:
         results = []
         for i, idx in enumerate(indices[0]):
             results.append({
-                "user_id": id_mapping[idx],
+                "userId": id_mapping[idx],
                 "similarity": float(similarities[0][i])
             })
-        
-        
+
+        return results
 
         return results

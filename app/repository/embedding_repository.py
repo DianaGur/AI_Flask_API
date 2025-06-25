@@ -10,11 +10,11 @@ class EmbeddingRepository:
     collection = db["user_embeddings"]
 
 
-    def save_embedding(user_id: str, embedding: np.ndarray) -> str:
+    def save_embedding(userId: str, embedding: np.ndarray) -> str:
         """שומר וקטור embedding במסד"""
         embedding_list = embedding.tolist()  # המרה כדי שמונגו יקבל
         document = {
-            "user_id": user_id,
+            "userId": userId,
             "embedding": embedding_list,
             "created_at": datetime.utcnow()
         }
@@ -22,9 +22,9 @@ class EmbeddingRepository:
         return str(result.inserted_id)
 
 
-    def get_embedding_by_user_id(user_id: str) -> np.ndarray | None:
-        """מאחזר embedding של משתמש לפי user_id"""
-        doc = collection.find_one({"user_id": user_id})
+    def get_embedding_by_user_id(userId: str) -> np.ndarray | None:
+        """מאחזר embedding של משתמש לפי userId"""
+        doc = collection.find_one({"userId": userId})
         if doc:
             return np.array(doc["embedding"])
         return None

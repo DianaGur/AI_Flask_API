@@ -10,12 +10,12 @@ router = APIRouter()
 
 # מבנה הבקשה להתאמה
 class MatchRequest(BaseModel):
-    user_id: str
+    userId: str
     candidate_ids: List[str]
 
 # Boundary for saveing the request
 class SaveEmbeddingRequest(BaseModel):
-    user_id: str
+    userId: str
     image_urls: List[str]
 
 # Main service of the server
@@ -23,12 +23,12 @@ matcher = FaceSimilearityService()
 
 @router.post("/match")
 def match_faces(req: MatchRequest):
-    if not embedding_store.exists(req.user_id):
+    if not embedding_store.exists(req.userId):
         raise HTTPException(status_code=404, detail="User embedding not found.")
 
     results = matcher.match_user_to_candidates(
-        user_id=req.user_id,
-        candidate_ids=req.candidate_ids
+        userId=req.userId,
+        candidate_ids=req.candidateIds
     )
     if not results:
         raise HTTPException(status_code=400, detail="No candidate embeddings found.")
@@ -47,12 +47,12 @@ def save_user_embedding(req: SaveEmbeddingRequest):
     if not faces:
         raise HTTPException(status_code=400, detail="No faces detected.")
 
-    matcher.save_embedding(req.user_id, faces)
-    return {"message": f"Embedding for user {req.user_id} saved."}
+    matcher.save_embedding(req.userId, faces)
+    return {"message": f"Embedding for user {req.userId} saved."}
 
-@router.get("/embeddings/{user_id}")
-def get_user_embedding(user_id: str):
-    if not embedding_store.exists(user_id):
+@router.get("/embeddings/{userId}")
+def get_user_embedding(userId: str):
+    if not embedding_store.exists(userId):
         raise HTTPException(status_code=404, detail="User embedding not found.")
-    emb = embedding_store.get(user_id).tolist()
-    return {"user_id": user_id, "embedding": emb}
+    emb = embedding_store.get(userId).tolist()
+    return {"userId": userId, "embedding": emb}

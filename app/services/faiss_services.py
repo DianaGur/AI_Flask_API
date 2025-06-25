@@ -7,9 +7,9 @@ class FaissService:
     def __init__(self):
         self.dim = 128 
 
-    def match_user_to_candidates(self, user_id: str, candidate_ids: list[str], top_k: int = 10) -> list[dict]:
+    def match_user_to_candidates(self, userId: str, candidate_ids: list[str], top_k: int = 10) -> list[dict]:
         # get users embedding
-        query_embedding = get_embedding_by_user_id(user_id)
+        query_embedding = get_embedding_by_user_id(userId)
         if query_embedding is None:
             return []
 
