@@ -13,12 +13,12 @@ class MatchRequest(BaseModel):
     user_id: str
     candidate_ids: List[str]
 
-# מבנה הבקשה לשמירה
+# Boundary for saveing the request
 class SaveEmbeddingRequest(BaseModel):
     user_id: str
     image_urls: List[str]
 
-# שירות ראשי
+# Main service of the server
 matcher = FaceSimilearityService()
 
 @router.post("/match")

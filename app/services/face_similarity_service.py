@@ -43,5 +43,7 @@ class FaceSimilearityService:
                 "user_id": id_mapping[idx],
                 "similarity": float(similarities[0][i])
             })
+        
+        
 
         return results

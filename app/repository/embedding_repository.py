@@ -1,28 +1,34 @@
 # repository/embedding_store.py
+from pymongo import MongoClient
+from datetime import datetime
 import numpy as np
-from typing import Dict, List, Tuple
 
 class EmbeddingRepository:
-    def __init__(self):
-        self._store: Dict[str, np.ndarray] = {}
+    # יצירת החיבור למסד (כדאי להוציא בהמשך לקובץ config עם משתנים מהסביבה)
+    client = MongoClient("mongodb://localhost:27017/")
+    db = client["face_embeddings_db"]
+    collection = db["user_embeddings"]
 
-    def save(self, user_id: str, embedding: np.ndarray):
-        self._store[user_id] = embedding
 
-    def get(self, user_id: str) -> np.ndarray:
-        return self._store.get(user_id)
+    def save_embedding(user_id: str, embedding: np.ndarray) -> str:
+        """שומר וקטור embedding במסד"""
+        embedding_list = embedding.tolist()  # המרה כדי שמונגו יקבל
+        document = {
+            "user_id": user_id,
+            "embedding": embedding_list,
+            "created_at": datetime.utcnow()
+        }
+        result = collection.insert_one(document)
+        return str(result.inserted_id)
 
-    def exists(self, user_id: str) -> bool:
-        return user_id in self._store
 
-    def get_many(self, user_ids: List[str]) -> Tuple[List[np.ndarray], List[str]]:
-        embeddings = []
-        ids = []
-        for uid in user_ids:
-            if uid in self._store:
-                embeddings.append(self._store[uid])
-                ids.append(uid)
-        return embeddings, ids
+    def get_embedding_by_user_id(user_id: str) -> np.ndarray | None:
+        """מאחזר embedding של משתמש לפי user_id"""
+        doc = collection.find_one({"user_id": user_id})
+        if doc:
+            return np.array(doc["embedding"])
+        return None
+
 
 # Initialize the embedding store - global variable
 embedding_store = EmbeddingRepository()
