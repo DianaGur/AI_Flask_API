@@ -18,7 +18,7 @@ class EmbeddingRepository:
             "embedding": embedding_list,
             "created_at": datetime.utcnow()
         }
-        result = self.collection.insert_one(document)
+        result = self.collection.replace_one(document)
         return str(result.inserted_id)
 
 
@@ -40,6 +40,26 @@ class EmbeddingRepository:
             id_mapping.append(doc["userId"])
 
         return embeddings, id_mapping
+    
+    def get_all_paginated(self, page: int, size: int) -> tuple[list[dict], int]:
+        skip = (page - 1) * size
+        cursor = self.collection.find().skip(skip).limit(size)
+
+        embeddings = []
+        for doc in cursor:
+            embeddings.append({
+                "userId": doc["userId"],
+                "embedding": doc["embedding"],
+                "created_at": doc.get("created_at")
+            })
+
+        total = self.collection.count_documents({})
+        return embeddings, total
+
+    
+    def delete_all(self) -> int:
+        result = self.collection.delete_many({})
+        return result.deleted_count
 
 
 

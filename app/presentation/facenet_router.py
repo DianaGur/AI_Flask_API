@@ -1,5 +1,5 @@
 # match_router.py
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel
 from typing import List
 from services.face_similarity_service import FaceSimilearityService
@@ -58,3 +58,17 @@ def get_user_embedding(userId: str):
         raise HTTPException(status_code=404, detail="User embedding not found.")
     return {"userId": userId, "embedding": embedding.tolist()}
 
+@router.get("/embeddings")
+def get_all_embeddings(page: int = Query(1, ge=1), size: int = Query(10, ge=1, le=100)):
+    embeddings, total = embedding_store.get_all_paginated(page=page, size=size)
+    return {
+        "total": total,
+        "page": page,
+        "size": size,
+        "data": embeddings
+    }
+
+@router.delete("")
+def delete_all_embeddings():
+    result = embedding_store.delete_all()
+    return {"deleted_count": result}
