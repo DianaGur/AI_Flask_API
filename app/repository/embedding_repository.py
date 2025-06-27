@@ -11,7 +11,7 @@ class EmbeddingRepository:
 
 
     def save(self, userId: str, embedding: np.ndarray) -> str:
-        """שומר וקטור embedding במסד"""
+        # save user embedding to MongoDB
         embedding_list = embedding.tolist()  # המרה כדי שמונגו יקבל
         document = {
             "userId": userId,
@@ -23,11 +23,24 @@ class EmbeddingRepository:
 
 
     def get_embedding_by_user_id(self, userId: str) -> np.ndarray | None:
-        """מאחזר embedding של משתמש לפי userId"""
+        #returns user embedding by userId
         doc = self.collection.find_one({"userId": userId})
         if doc:
             return np.array(doc["embedding"])
         return None
+    
+    def get_many_embeddings_by_user_ids(self, user_ids: list[str]) -> tuple[list[np.ndarray], list[str]]:
+        docs = self.collection.find({"userId": {"$in": user_ids}})
+        
+        embeddings = []
+        id_mapping = []
+
+        for doc in docs:
+            embeddings.append(np.array(doc["embedding"]))
+            id_mapping.append(doc["userId"])
+
+        return embeddings, id_mapping
+
 
 
 # Initialize the embedding store - global variable

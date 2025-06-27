@@ -26,8 +26,8 @@ class FaceSimilearityService:
         print(f"Saved embedding for user {userId} with shape {final_embedding.shape}")
 
     def match_user_to_candidates(self, userId: str, candidate_ids: list):
-        query_embedding = embedding_store.get(userId).reshape(1, -1)
-        candidate_embeddings, id_mapping = embedding_store.get_many(candidate_ids)
+        query_embedding = embedding_store.get_embedding_by_user_id(userId).reshape(1, -1)
+        candidate_embeddings, id_mapping = embedding_store.get_many_embeddings_by_user_ids(candidate_ids)
 
         if not candidate_embeddings:
             return []

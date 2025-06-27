@@ -23,12 +23,13 @@ matcher = FaceSimilearityService()
 
 @router.post("/match")
 def match_faces(req: MatchRequest):
-    if not embedding_store.exists(req.userId):
+    embedding = embedding_store.get_embedding_by_user_id(req.userId)
+    if embedding is None or embedding.size == 0:
         raise HTTPException(status_code=404, detail="User embedding not found.")
 
     results = matcher.match_user_to_candidates(
         userId=req.userId,
-        candidate_ids=req.candidateIds
+        candidate_ids=req.candidate_ids
     )
     if not results:
         raise HTTPException(status_code=400, detail="No candidate embeddings found.")
@@ -52,7 +53,8 @@ def save_user_embedding(req: SaveEmbeddingRequest):
 
 @router.get("/embeddings/{userId}")
 def get_user_embedding(userId: str):
-    if not embedding_store.exists(userId):
+    embedding = embedding_store.get_embedding_by_user_id(userId)
+    if embedding is None or embedding.size == 0:
         raise HTTPException(status_code=404, detail="User embedding not found.")
-    emb = embedding_store.get(userId).tolist()
-    return {"userId": userId, "embedding": emb}
+    return {"userId": userId, "embedding": embedding.tolist()}
+
