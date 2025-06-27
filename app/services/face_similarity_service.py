@@ -23,6 +23,7 @@ class FaceSimilearityService:
                 embeddings.append(emb)
         final_embedding = np.mean(embeddings, axis=0).astype('float32')
         embedding_store.save(userId, final_embedding)
+        print(f"Saved embedding for user {userId} with shape {final_embedding.shape}")
 
     def match_user_to_candidates(self, userId: str, candidate_ids: list):
         query_embedding = embedding_store.get(userId).reshape(1, -1)
@@ -43,7 +44,5 @@ class FaceSimilearityService:
                 "userId": id_mapping[idx],
                 "similarity": float(similarities[0][i])
             })
-
-        return results
 
         return results

@@ -2,9 +2,9 @@ import subprocess
 import sys
 
 required_packages = [
-    "fastapi", "uvicorn", "pydantic", "torch", "torchvision",
-    "facenet-pytorch", "faiss-cpu", "numpy", "typing-extensions",
-    "scikit-learn", "matplotlib", "Pillow", "mtcnn", "tensorflow", "pymongo"
+    # "fastapi", "uvicorn", "pydantic", "torch", "torchvision",
+    # "facenet-pytorch", "faiss-cpu", "numpy", "typing-extensions",
+    # "scikit-learn", "matplotlib", "Pillow", "mtcnn", "tensorflow", "pymongo"
 ]
 
 for package in required_packages:
