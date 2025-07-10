@@ -1,4 +1,4 @@
-python-3.11.9
+
 fastapi
 uvicorn
 pydantic
@@ -10,5 +10,8 @@ numpy
 typing-extensions
 scikit-learn
 matplotlib
-Pillow==9.4.0
+Pillow
 typing-extensions
+mtcnn
+tensorflow 
+pymongo
