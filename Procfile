@@ -1,0 +1,1 @@
+web: gunicorn app.facenet_microserver_application:app --bind 0.0.0.0:8080
