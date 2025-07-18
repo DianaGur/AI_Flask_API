@@ -1,7 +1,7 @@
 # services/faiss_service.py
 import numpy as np
 import faiss
-from repository.embedding_repository import get_embedding_by_user_id, get_many_embeddings_by_user_ids
+from app.repository.embedding_repository import get_embedding_by_user_id, get_many_embeddings_by_user_ids
 
 class FaissService:
     def __init__(self):
