@@ -7,7 +7,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-CMD ["gunicorn", "app.facenet_microserver_application:app", "--bind", "0.0.0.0:9001"]
+CMD ["gunicorn", "facenet_microserver_application:app", "--bind", "0.0.0.0:9001"]
 # To run the Dockerfile in termina: 
     # docker build -t face-clustering-service .
     # docker run --env-file .env -p 8000:8000 face-clustering-service
