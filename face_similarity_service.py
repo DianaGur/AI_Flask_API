@@ -2,8 +2,8 @@
 import numpy as np
 import os
 import faiss
-from app.repository.embedding_repository import embedding_store
-from app.models.facenet import FaceNetBackbone
+from embedding_repository import embedding_store
+from facenet import FaceNetBackbone
 import torch
 import torch.nn.functional as F
 

@@ -2,9 +2,9 @@
 from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel
 from typing import List
-from services.face_similarity_service import FaceSimilearityService
-from services.image_service import download_images, detect_faces
-from repository.embedding_repository import embedding_store
+from face_similarity_service import FaceSimilearityService
+from image_service import download_images, detect_faces
+from embedding_repository import embedding_store
 
 router = APIRouter()
 

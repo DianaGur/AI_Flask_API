@@ -15,7 +15,7 @@ for package in required_packages:
         subprocess.check_call([sys.executable, "-m", "pip", "install", package])
 
 from fastapi import FastAPI
-from app.presentation.facenet_router import router as facenet_router
+from facenet_router import router as facenet_router
 
 
 app = FastAPI()
